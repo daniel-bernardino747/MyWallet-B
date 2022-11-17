@@ -6,7 +6,7 @@ import connectToMongo from './database.js';
 
 dotenv.config();
 
-export const db = await connectToMongo();
+const db = await connectToMongo();
 
 const app = express();
 const port = 5000;
@@ -19,6 +19,6 @@ app.listen(port, () => {
   console.log(`🌀 started server in door: ${port}`);
 });
 
-export const collectionUsers = db.collection('users');
-export const collectionSessions = db.collection('sessions');
-export const collectionTransactions = db.collection('transactions');
+export const usersCollection = db.collection('users');
+export const sessionsCollection = db.collection('sessions');
+export const transactionsCollection = db.collection('transactions');
