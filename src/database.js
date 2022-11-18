@@ -1,4 +1,7 @@
 import { MongoClient } from 'mongodb';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export default async function connectToMongo() {
   try {
@@ -10,3 +13,9 @@ export default async function connectToMongo() {
     return err;
   }
 }
+
+const db = await connectToMongo();
+
+export const usersCollection = db.collection('users');
+export const sessionsCollection = db.collection('sessions');
+export const transactionsCollection = db.collection('transactions');
