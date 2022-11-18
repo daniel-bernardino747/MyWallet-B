@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import { v4 as uuid } from 'uuid';
-import { usersCollection, sessionsCollection } from '../server.js';
+import { usersCollection, sessionsCollection } from '../database.js';
 
 export async function registerClient(req, res) {
   const { name, email, password } = req.body;
