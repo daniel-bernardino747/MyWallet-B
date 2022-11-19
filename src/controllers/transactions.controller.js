@@ -1,20 +1,12 @@
-import { sessionsCollection, transactionsCollection, usersCollection } from '../database.js';
+import { transactionsCollection } from '../database.js';
 
 export async function postTransaction(req, res) {
   const {
     date, value, details, type,
   } = req.body;
-  const { authorization } = req.headers;
-
-  const token = authorization?.replace('Bearer ', '');
-  if (!token) return res.sendStatus(401);
+  const { user } = req.details;
 
   try {
-    const session = await sessionsCollection.findOne({ token });
-    const user = await usersCollection.findOne({ _id: session.userId });
-
-    if (!user) return res.sendStatus(401);
-
     await transactionsCollection.insertOne({
       userId: user._id, date, value, details, type,
     });
@@ -25,17 +17,9 @@ export async function postTransaction(req, res) {
 }
 
 export async function getAllTransaction(req, res) {
-  const { authorization } = req.headers;
-
-  const token = authorization?.replace('Bearer ', '');
-  if (!token) return res.sendStatus(401);
+  const { user } = req.details;
 
   try {
-    const session = await sessionsCollection.findOne({ token });
-    const user = await usersCollection.findOne({ _id: session.userId });
-
-    if (!user) return res.sendStatus(401);
-
     const allTransaction = await transactionsCollection.find({ userId: user._id }).toArray();
 
     return res.status(200).json({ message: allTransaction });

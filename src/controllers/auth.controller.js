@@ -5,30 +5,24 @@ import { usersCollection, sessionsCollection } from '../database.js';
 export async function registerClient(req, res) {
   const { name, email, password } = req.body;
 
-  const hashPassword = bcrypt.hashSync(password, 10);
   try {
+    const hashPassword = bcrypt.hashSync(password, 10);
+
     await usersCollection.insertOne({ name, email, password: hashPassword });
-    res.sendStatus(201);
+    return res.sendStatus(201);
   } catch (err) {
-    res.sendStatus(500);
+    return res.sendStatus(500);
   }
 }
 
 export async function signIn(req, res) {
-  console.log(req.body);
-  const { email, password } = req.body;
-  const token = uuid();
+  const { user } = req.details;
 
   try {
-    const existingUser = await usersCollection.findOne({ email });
-    if (!existingUser) return res.sendStatus(401);
+    const token = uuid();
+    await sessionsCollection.insertOne({ token, userId: user._id });
 
-    const correctPassword = bcrypt.compare(password, existingUser.password);
-    if (!correctPassword) return res.sendStatus(401);
-
-    await sessionsCollection.insertOne({ token, userId: existingUser._id });
-
-    return res.status(201).json({ token });
+    return res.status(201).json({ token, user: user.name });
   } catch (err) {
     return res.sendStatus(500);
   }
