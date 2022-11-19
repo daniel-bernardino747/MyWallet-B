@@ -33,15 +33,13 @@ export async function getAllTransaction(req, res) {
   try {
     const session = await sessionsCollection.findOne({ token });
     const user = await usersCollection.findOne({ _id: session.userId });
-    console.log(user._id);
 
     if (!user) return res.sendStatus(401);
 
     const allTransaction = await transactionsCollection.find({ userId: user._id }).toArray();
-    console.log(allTransaction);
 
     return res.status(200).json({ message: allTransaction });
   } catch (err) {
-    return res.sendStatus(500);
+    return res.status(500).json({ error: err });
   }
 }
