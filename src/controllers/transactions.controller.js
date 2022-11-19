@@ -4,7 +4,7 @@ export async function postTransaction(req, res) {
   const {
     date, value, details, type,
   } = req.body;
-  const { user } = req.details;
+  const { user } = req;
 
   try {
     await transactionsCollection.insertOne({
@@ -17,7 +17,7 @@ export async function postTransaction(req, res) {
 }
 
 export async function getAllTransaction(req, res) {
-  const { user } = req.details;
+  const { user } = req;
 
   try {
     const allTransaction = await transactionsCollection.find({ userId: user._id }).toArray();

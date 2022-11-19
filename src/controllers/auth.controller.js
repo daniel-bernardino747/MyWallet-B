@@ -16,7 +16,7 @@ export async function registerClient(req, res) {
 }
 
 export async function signIn(req, res) {
-  const { user } = req.details;
+  const { user } = req;
 
   try {
     const token = uuid();
