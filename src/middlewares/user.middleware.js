@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
-import { EMAIL_IN_USE, INCORRECT_AUTH } from '../constants/errors.constants.js';
+
 import { usersCollection } from '../database/index.js';
+import { EMAIL_IN_USE, INCORRECT_AUTH } from '../constants/errors.constants.js';
 
 export async function existingUserValidate(req, res, next) {
   const { email } = req.body;

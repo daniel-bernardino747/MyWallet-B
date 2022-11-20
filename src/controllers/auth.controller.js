@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import { v4 as uuid } from 'uuid';
+
 import { usersCollection, sessionsCollection } from '../database/index.js';
 
 export async function registerClient(req, res) {
