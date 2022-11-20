@@ -1,3 +1,5 @@
+import { ObjectId } from 'mongodb';
+import SUCCESS_DELETED from '../constants/sucess.constants.js';
 import { transactionsCollection } from '../database/index.js';
 
 export async function postTransaction(req, res) {
@@ -25,5 +27,16 @@ export async function getAllTransaction(req, res) {
     return res.status(200).json({ message: allTransaction });
   } catch (err) {
     return res.status(500).json({ error: err });
+  }
+}
+
+export async function deleteOneTransaction(req, res) {
+  const { id } = req.params;
+
+  try {
+    await transactionsCollection.deleteOne({ _id: ObjectId(id) });
+    res.status(200).json({ message: SUCCESS_DELETED });
+  } catch (err) {
+    res.status(500).json({ error: err });
   }
 }
