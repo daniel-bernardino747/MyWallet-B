@@ -12,7 +12,7 @@ export async function postTransaction(req, res) {
     });
     return res.sendStatus(201);
   } catch (err) {
-    return res.sendStatus(500);
+    return res.status(500).json({ error: err });
   }
 }
 

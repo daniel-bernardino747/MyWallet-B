@@ -12,7 +12,7 @@ export async function registerClient(req, res) {
     await usersCollection.insertOne({ name, email, password: hashPassword });
     return res.sendStatus(201);
   } catch (err) {
-    return res.sendStatus(500);
+    return res.status(500).json({ error: err });
   }
 }
 
@@ -23,8 +23,8 @@ export async function signIn(req, res) {
     const token = uuid();
     await sessionsCollection.insertOne({ token, userId: user._id });
 
-    return res.status(201).json({ token, user: user.name });
+    return res.status(201).json({ token, user });
   } catch (err) {
-    return res.sendStatus(500);
+    return res.status(500).json({ error: err });
   }
 }
