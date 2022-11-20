@@ -1,4 +1,4 @@
-import { sessionsCollection, usersCollection } from '../database.js';
+import { sessionsCollection, usersCollection } from '../database/index.js';
 
 export default async function authValidate(req, res, next) {
   const { authorization } = req.headers;
@@ -14,5 +14,5 @@ export default async function authValidate(req, res, next) {
 
   req.user = user;
 
-  next();
+  return next();
 }

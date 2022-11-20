@@ -1,4 +1,4 @@
-import { transactionsCollection } from '../database.js';
+import { transactionsCollection } from '../database/index.js';
 
 export async function postTransaction(req, res) {
   const {

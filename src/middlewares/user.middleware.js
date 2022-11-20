@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import { EMAIL_IN_USE, INCORRECT_AUTH } from '../constants/errors.constants.js';
-import { usersCollection } from '../database.js';
+import { usersCollection } from '../database/index.js';
 
 export async function existingUserValidate(req, res, next) {
   const { email } = req.body;
@@ -8,7 +8,7 @@ export async function existingUserValidate(req, res, next) {
   const existingUser = await usersCollection.findOne({ email });
   if (existingUser) return res.status(401).json({ error: EMAIL_IN_USE });
 
-  next();
+  return next();
 }
 
 export async function incorrectUserValidate(req, res, next) {
@@ -22,5 +22,5 @@ export async function incorrectUserValidate(req, res, next) {
 
   req.user = existingUser;
 
-  next();
+  return next();
 }
