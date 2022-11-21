@@ -19,12 +19,12 @@ export async function postTransaction(req, res) {
 }
 
 export async function getAllTransaction(req, res) {
-  const { user } = req;
+  const { user, balance } = req;
 
   try {
     const allTransaction = await transactionsCollection.find({ userId: user._id }).toArray();
 
-    return res.status(200).json({ message: allTransaction });
+    return res.status(200).json({ message: { data: allTransaction, balance } });
   } catch (err) {
     return res.status(500).json({ error: err });
   }

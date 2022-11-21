@@ -4,7 +4,7 @@ import { registerClient, signIn } from '../controllers/auth.controller.js';
 import { deleteOneTransaction, getAllTransaction, postTransaction } from '../controllers/transactions.controller.js';
 
 import authValidate from '../middlewares/auth.middleware.js';
-import { existingUserValidate, incorrectUserValidate } from '../middlewares/user.middleware.js';
+import { balanceOfUserTransactions, existingUserValidate, incorrectUserValidate } from '../middlewares/user.middleware.js';
 
 const routes = express.Router();
 
@@ -20,7 +20,7 @@ routes.use(authValidate);
 
 routes.post('/transactions', postTransaction);
 
-routes.get('/transactions', getAllTransaction);
+routes.get('/transactions', balanceOfUserTransactions, getAllTransaction);
 
 routes.delete('/transactions/:id', deleteOneTransaction);
 
