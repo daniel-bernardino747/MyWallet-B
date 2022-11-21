@@ -1,11 +1,15 @@
-import { MongoClient } from 'mongodb';
+import { MongoClient, ServerApiVersion } from 'mongodb';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
 export default async function connectToMongo() {
   try {
-    const mongoClient = new MongoClient(process.env.MONGO_URI);
+    const mongoClient = new MongoClient(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      serverApi: ServerApiVersion.v1,
+    });
     console.log('🌀 connected to MongoDB');
     return (await mongoClient.connect()).db('MyWallet');
   } catch (err) {
