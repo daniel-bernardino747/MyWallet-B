@@ -23,7 +23,7 @@ export async function signIn(req, res) {
     const token = uuid();
     await sessionsCollection.insertOne({ token, userId: user._id });
 
-    return res.status(201).json({ token, user });
+    return res.status(201).send({ token, user });
   } catch (err) {
     return res.status(500).json({ error: err });
   }
