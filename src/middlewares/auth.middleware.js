@@ -16,5 +16,5 @@ export default async function authValidate(req, res, next) {
 
   req.user = user;
 
-  return next();
+  next();
 }

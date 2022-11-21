@@ -9,7 +9,7 @@ export async function existingUserValidate(req, res, next) {
   const existingUser = await usersCollection.findOne({ email });
   if (existingUser) return res.status(401).json({ error: EMAIL_IN_USE });
 
-  return next();
+  next();
 }
 
 export async function incorrectUserValidate(req, res, next) {
@@ -23,7 +23,7 @@ export async function incorrectUserValidate(req, res, next) {
 
   req.user = existingUser;
 
-  return next();
+  next();
 }
 
 export async function balanceOfUserTransactions(req, res, next) {
@@ -46,5 +46,5 @@ export async function balanceOfUserTransactions(req, res, next) {
   const balance = sumDeposits - sumWithdrawal;
   req.balance = balance;
 
-  return next();
+  next();
 }
